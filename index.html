@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>掌天武易 - 纯正复古 | 散人天堂</title>
+    <style>
+        /* --- 引入古风衬线字体 --- */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@500;900&display=swap');
+
+        :root {
+            /* 鲜红基调 */
+            --bg-top: #ff2a2a;     /* 顶部鲜亮红 */
+            --bg-bottom: #b30000;  /* 底部厚重红 */
+            --gold: #ffe082;       /* 浅香槟金 */
+            --gold-dark: #d4af37;  /* 暗金边框 */
+            --text-white: #fffdf5; /* 暖白文字 */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Serif SC', "SimSun", serif;
+            color: var(--text-white);
+            /* 整体背景色：鲜红色渐变，模拟高级丹漆质感 */
+            background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* 增加一个纹理层，防止红色太单调 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(circle, transparent 20%, #000 150%); /* 四周暗角 */
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* --- 导航栏 --- */
+        nav {
+            background: rgba(100, 0, 0, 0.4); /* 半透明深红 */
+            border-bottom: 1px solid var(--gold);
+            backdrop-filter: blur(5px);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .logo {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--gold);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+        }
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 18px;
+            border-bottom: 2px solid transparent;
+            transition: 0.3s;
+        }
+        .menu a:hover {
+            color: var(--gold);
+            border-bottom: 2px solid var(--gold);
+        }
+
+        /* --- 头部 Hero --- */
+        .hero {
+            text-align: center;
+            padding: 100px 20px 60px;
+        }
+        .hero h1 {
+            font-size: 80px;
+            margin-bottom: 20px;
+            background: linear-gradient(to bottom, #fff, var(--gold));
+            -webkit-background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 4px 0px #800000);
+            letter-spacing: 10px;
+        }
+        .hero p {
+            font-size: 24px;
+            color: var(--gold);
+            margin-bottom: 40px;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        /* 核心声明框 */
+        .statement-box {
+            background: rgba(0, 0, 0, 0.2);
+            border: 2px solid var(--gold-dark);
+            max-width: 800px;
+            margin: 0 auto 50px;
+            padding: 30px;
+            border-radius: 4px;
+            position: relative;
+        }
+        /* 四角装饰 */
+        .statement-box::after {
+            content: "❖";
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--gold);
+            font-size: 24px;
+            background: #a00000; /* 遮挡线条 */
+            padding: 0 10px;
+        }
+
+        /* --- 核心操作按钮组 (新增) --- */
+        .action-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px; /* 按钮间距 */
+            margin-bottom: 50px;
+            flex-wrap: wrap; /* 移动端自动换行 */
+        }
+
+        .btn-main {
+            padding: 18px 50px;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            /* 经典的传奇切角风格 */
+            clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            font-family: 'Noto Serif SC', serif;
+        }
+
+        /* 下载按钮：高亮主色 */
+        .btn-dl {
+            background: linear-gradient(135deg, #ffe082 0%, #d4af37 100%);
+            color: #8b0000;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+        }
+        /* 下载按钮悬停光效 */
+        .btn-dl:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(255, 224, 130, 0.4);
+            background: linear-gradient(135deg, #fff 0%, #ffe082 100%);
+        }
+
+        /* 充值按钮：暗金红色，低调奢华 */
+        .btn-pay {
+            background: rgba(0, 0, 0, 0.3);
+            color: var(--gold);
+            border: 2px solid var(--gold-dark);
+            /* 为了配合 clip-path，使用 outline 或 box-shadow 模拟边框效果会比较复杂，这里直接用背景色区分 */
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.2);
+            padding: 16px 48px; /* 稍微小一点点边框 */
+        }
+        .btn-pay:hover {
+            background: rgba(100, 0, 0, 0.6);
+            transform: translateY(-3px);
+            box-shadow: inset 0 0 10px rgba(255, 224, 130, 0.2), 0 0 20px rgba(255, 42, 42, 0.4);
+            color: #fff;
+            border-color: var(--gold);
+        }
+
+        /* 按钮扫光动画 */
+        .btn-main::after {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transform: skewX(-20deg);
+            transition: 0.5s;
+        }
+        .btn-main:hover::after {
+            left: 150%;
+            transition: 0.7s ease-in-out;
+        }
+
+
+        /* --- 歌词滚动显示区 --- */
+        .lyrics-wrapper {
+            width: 100%;
+            max-width: 600px;
+            height: 160px;
+            margin: 0 auto 40px;
+            position: relative;
+            overflow: hidden;
+            mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+            border-left: 2px solid rgba(255, 224, 130, 0.2);
+            border-right: 2px solid rgba(255, 224, 130, 0.2);
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .lyrics-container {
+            position: relative;
+            width: 100%;
+            text-align: center;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            padding: 70px 0;
+        }
+
+        .lrc-line {
+            font-size: 16px;
+            line-height: 32px;
+            color: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s;
+            min-height: 32px;
+        }
+
+        .lrc-active {
+            color: var(--gold);
+            font-size: 20px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 224, 130, 0.8), 0 0 20px rgba(255, 42, 42, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* --- 游戏特色 (并排卡片) --- */
+        .features {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 0 20px;
+        }
+        .feature-item {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 224, 130, 0.3);
+            padding: 25px;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .feature-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--gold);
+        }
+        .feature-item h3 {
+            color: var(--gold);
+            font-size: 22px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+        }
+        .feature-item p {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* --- 截图展示区 --- */
+        .gallery-section {
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--gold);
+            font-size: 32px;
+        }
+        
+        .image-row {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 20px;
+            width: 100%;
+            align-items: flex-start;
+        }
+        
+        .img-frame {
+            flex: 1;
+            border: 3px solid var(--gold-dark);
+            padding: 5px;
+            background: rgba(0,0,0,0.3);
+            height: auto; 
+            min-width: 0; 
+        }
+        
+        .img-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: brightness(1.1);
+        }
+        .img-caption {
+            text-align: center;
+            padding: 10px 0 5px;
+            color: #ffcccc;
+            font-size: 14px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* --- 音乐控制按钮样式 --- */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 10px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Noto Serif SC', serif;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 10px rgba(255, 224, 130, 0.3);
+            transition: all 0.3s;
+        }
+        .music-control:hover {
+            background: rgba(80, 0, 0, 0.9);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--gold);
+        }
+        .spin {
+            animation: spin 3s linear infinite;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* --- [新增] 左右悬浮广告样式 --- */
+        .floating-ad {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%); /* 垂直居中 */
+            z-index: 999;
+            transition: all 0.3s;
+        }
+        .floating-ad img {
+            width: 240px; /* 保持原尺寸 */
+            height: 200px;
+            display: block;
+            /* 可选：给图片加个金边，更符合传奇风格 */
+            border: 2px solid var(--gold-dark);
+            box-shadow: 0 0 10px rgba(0,0,0,0.8);
+        }
+        .floating-ad:hover {
+            transform: translateY(-50%) scale(1.05); /* 悬停微放大 */
+            filter: brightness(1.2);
+        }
+        
+        /* 左侧位置 */
+        .ad-left { left: 10px; }
+        /* 右侧位置 */
+        .ad-right { right: 10px; }
+
+        /* 移动端适配 */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 50px; }
+            .features { flex-direction: column; }
+            .img-frame img { height: auto; } 
+            .music-control { bottom: 10px; right: 10px; padding: 8px 12px; font-size: 12px; }
+            .lyrics-wrapper { height: 120px; max-width: 90%; }
+            .lrc-active { font-size: 18px; }
+            
+            /* 按钮适配 */
+            .action-group { flex-direction: column; gap: 15px; }
+            .btn-main { width: 80%; text-align: center; padding: 15px 0; font-size: 20px;}
+
+            /* [新增] 屏幕太窄时隐藏悬浮广告，避免遮挡内容 */
+            .floating-ad { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-content">
+            <div class="logo">掌天武易</div>
+            <div class="menu">
+                <a href="#">首页</a>
+                <a href="" target="_blank">下载</a>
+                <a href="" target="_blank">充值</a>
+            </div>
+        </div>
+    </nav>
+
+    <a href="" target="_blank" class="floating-ad ad-left">
+        <img src="2.gif" alt="充值赞助">
+    </a>
+    <a href="" target="_blank" class="floating-ad ad-right">
+        <img src="2.gif" alt="充值赞助">
+    </a>
+
+    <div class="hero">
+        <h1>掌天武易</h1>
+        <p>鲜红热血 · 纯正复古 · 装备保值</p>
+        
+        <div class="statement-box">
+            <h3 style="color: var(--gold); margin-bottom: 10px;">致敬经典，拒绝微变</h3>
+            <p>在这里，没有花哨的所谓“创新”。我们只还原法神、战圣、道尊三英雄抗击魔王、兽王、冥王的铁血岁月。</p>
+            <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">这是一场关于耐心与运气的较量，找回当年通宵守BOSS的纯粹快乐。</p>
+        </div>
+
+        <div class="action-group">
+            <a class="btn-main btn-dl" href="" target="_blank">
+                登陆器下载-立即踏入玛法
+            </a>
+            
+            <a href="" target="_blank" class="btn-main btn-pay">
+                在线充值赞助
+            </a>
+        </div>
+
+        <div class="lyrics-wrapper">
+            <div class="lyrics-container" id="lyricsBox">
+                </div>
+        </div>
+    </div>
+
+    <div class="features">
+        <div class="feature-item">
+            <h3>神话起源</h3>
+            <p>重塑经典故事背景，从三英雄崛起，到法师、战士、道士流派的形成，每一处细节都充满神话色彩。</p>
+        </div>
+        <div class="feature-item">
+            <h3>天麟圣衣</h3>
+            <p>保留核心高阶玩法，寻找失落的天麟圣衣与特戒系统。极品装备全靠打，市场由玩家主导。</p>
+        </div>
+        <div class="feature-item">
+            <h3>视觉盛宴</h3>
+            <p>独特的视觉风格，不仅美观，更经过精细打磨。画面更新，流畅度提升，彻底告别老旧版本的卡顿。</p>
+        </div>
+    </div>
+
+    <div class="gallery-section">
+        <h2 class="section-header">✦ 游戏实景 ✦</h2>
+        <div class="image-row">
+            <div class="img-frame">
+                <img src="Images00.BMP" alt="玛法大陆" onerror="this.src='https://via.placeholder.com/600x400/800000/ffffff?text=背景图完整显示'">
+                <div class="img-caption">复古画面 · 原汁原味</div>
+            </div>
+            <div class="img-frame">
+                <img src="Images01.BMP" alt="玛法大陆" onerror="this.src='https://via.placeholder.com/600x400/b30000/ffffff?text=战斗图完整显示'">
+                <div class="img-caption">激情岁月 · 重拾当年</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>抵制不良游戏 拒绝盗版游戏 注意自我保护 谨防受骗上当</p>
+        <p>Copyright © 2026 掌天武易 | 专注于1.76纯复古版本</p>
+    </footer>
+
+    <audio id="bgMusic" loop>
+        <source src="掌天武易.mp3" type="audio/mpeg">
+        您的浏览器不支持音频播放。
+    </audio>
+
+    <div class="music-control" id="musicBtn" onclick="toggleMusic()">
+        <span id="musicIcon">🔇</span>
+        <span id="musicText">点击播放战歌</span>
+    </div>
+
+    <script>
+        var audio = document.getElementById("bgMusic");
+        var btn = document.getElementById("musicBtn");
+        var icon = document.getElementById("musicIcon");
+        var text = document.getElementById("musicText");
+        var isPlaying = false; // 标记当前是否在播放
+
+        // --- 歌词数据 ---
+        const lyricsData = [
+            {time: 0, text: "风 吹过比奇的残垣"},
+            {time: 19, text: "血 在玛法大陆蔓延"},
+            {time: 25, text: "只要闭上眼 就能听见"},
+            {time: 28.5, text: "千军万马 在沙城下的呐喊"},
+            {time: 31.5, text: "那是青春未冷的誓言"},
+            {time: 34, text: "是木剑砍向稻草人的初见"},
+            {time: 38, text: "法神的群电 还在记忆里盘旋"},
+            {time: 41, text: "战圣的烈火 渴望再一次饮血"},
+            {time: 44, text: "道尊的冥王 镇压着深渊"},
+            {time: 47, text: "当魔王苏醒 当兽王踏碎荒原"},
+            {time: 50.5, text: "当冥王在黑暗中露出了笑脸"},
+            {time: 56, text: "三英雄的意志 此刻必须重现"},
+            {time: 62, text: "谁在等待 谁在徘徊"},
+            {time: 68.5, text: "号角已经吹响 这扇门为你打开"},
+            {time: 74.5, text: "别说什么成败 别谈什么意外"},
+            {time: 81.5, text: "在武易的世界 强者生，弱者汰"},
+            {time: 87.5, text: "掌天武易 我们要把这苍穹撕裂"},
+            {time: 93.5, text: "身披天麟圣衣 金甲光芒照亮了黑夜"},
+            {time: 100.5, text: "这是强者的王座 这是王者的世界"},
+            {time: 106.5, text: "只要兄弟并肩 就没有过不去的劫"},
+            {time: 112.5, text: "掌天武易 热血在这一刻最为暴烈"},
+            {time: 118.5, text: "指尖特戒闪烁 麻痹复活掌控了一切"},
+            {time: 125.5, text: "我要那沙城的旗帜 写上我们的名贴"},
+            {time: 132, text: "这一战 注定要让全服都妥协！"},
+            {time: 139.5, text: "不要问我 为何如此执着"},
+            {time: 144.5, text: "看那满地神装 是勇者最好的如歌"},
+            {time: 151.5, text: "从野外厮杀 到皇宫的争夺"},
+            {time: 154.5, text: "每一场PK 都是灵魂的焦灼"},
+            {time: 164, text: "既然来了 就别想轻易逃脱"},
+            {time: 167, text: "拿起你的圣魂 让恩仇在此刻定夺"},
+            {time: 171, text: "岁月带走了年少轻狂 但带不走这满腔滚烫"},
+            {time: 176, text: "这一路风霜 我们一起扛 一起闯 一起狂"},
+            {time: 188.5, text: "掌天武易！我们要把这苍穹撕裂！"},
+            {time: 194.5, text: "身披天麟圣衣 金甲光芒照亮了黑夜"},
+            {time: 201.5, text: "这是强者的王座 这是王者的世界"},
+            {time: 207.5, text: "只要兄弟并肩，就没有过不去的劫"},
+            {time: 213.5, text: "掌天武易 热血在这一刻最为暴烈"},
+            {time: 220, text: "指尖特戒闪烁 麻痹复活掌控了一切"},
+            {time: 226.5, text: "我要那沙城的旗帜 写上我们的名贴"},
+            {time: 233, text: "这一战 注定要让全服都妥协"},
+            {time: 239, text: "掌天武易 这一世 由我掌天"},
+            {time: 253, text: "字幕:掌天武易"}
+        ];
+
+        var lyricsBox = document.getElementById("lyricsBox");
+        var lineHeight = 32;
+
+        function initLyrics() {
+            lyricsBox.innerHTML = "";
+            lyricsData.forEach((item, index) => {
+                let p = document.createElement("div");
+                p.innerText = item.text;
+                p.className = "lrc-line";
+                p.dataset.index = index;
+                lyricsBox.appendChild(p);
+            });
+        }
+
+        function syncLyrics() {
+            var currentTime = audio.currentTime;
+            let activeIndex = lyricsData.findIndex(item => item.time > currentTime);
+            
+            if (activeIndex === -1) {
+                activeIndex = lyricsData.length - 1;
+            } else {
+                activeIndex = activeIndex - 1;
+            }
+
+            if (activeIndex < 0) activeIndex = 0;
+
+            var lines = document.getElementsByClassName("lrc-line");
+            var currentActive = document.querySelector(".lrc-active");
+            
+            if (currentActive) {
+                currentActive.classList.remove("lrc-active");
+            }
+            if (lines[activeIndex]) {
+                lines[activeIndex].classList.add("lrc-active");
+                // 让高亮行保持在中间 (70px 是容器 padding)
+                let translateY = -(activeIndex * lineHeight); 
+                lyricsBox.style.transform = `translateY(${translateY}px)`;
+            }
+        }
+
+        initLyrics();
+        audio.addEventListener("timeupdate", syncLyrics);
+
+        // 更新UI状态的函数
+        function updateMusicUI(playing) {
+            if (playing) {
+                icon.innerText = "💿";
+                icon.classList.add("spin");
+                text.innerText = "战歌奏响";
+            } else {
+                icon.innerText = "🔇";
+                icon.classList.remove("spin");
+                text.innerText = "播放战歌";
+            }
+        }
+
+        // 切换播放/暂停
+        function toggleMusic() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                updateMusicUI(false);
+            } else {
+                audio.play().then(() => {
+                    isPlaying = true;
+                    updateMusicUI(true);
+                }).catch(e => {
+                    console.log("播放被浏览器拦截");
+                });
+            }
+        }
+
+        // --- 核心逻辑：自动播放与点击激活 ---
+        window.addEventListener('load', function() {
+            // 1. 尝试直接播放
+            var promise = audio.play();
+
+            if (promise !== undefined) {
+                promise.then(_ => {
+                    // 成功：无需做任何事
+                    isPlaying = true;
+                    updateMusicUI(true);
+                }).catch(error => {
+                    // 失败：说明被浏览器拦截了
+                    console.log("自动播放被拦截，启动【点击任意处播放】策略");
+                    
+                    // 2. 添加一个“一次性”的全局点击事件
+                    // 只要用户点页面任何地方，就触发播放，然后这个事件自我销毁
+                    document.addEventListener('click', function unlockAudio() {
+                        if (!isPlaying) {
+                            audio.play().then(() => {
+                                isPlaying = true;
+                                updateMusicUI(true);
+                            });
+                        }
+                        // 移除监听器，避免以后点击导致不必要的逻辑触发
+                        document.removeEventListener('click', unlockAudio);
+                    }, { once: true }); // {once:true} 也可以自动移除
+                });
+            }
+        });
+    </script>
+    <script type='text/javascript'>var path = '%3Cscript type=\'text/javascript\' src=\'https://vip.xlrzf.com/api/Record/FlowRecord?uid=92224358&g=f4ea2fc9&reffer=' + escape(document.referrer) +'&url='+ unescape(document.location.href) + '\'%3E%3C/script%3E'; document.write(unescape(path));</script>     
+
+</body>
+</html>
